@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="hello-servlet3">Hello Servlet3</a>
 </body>
 </html>
