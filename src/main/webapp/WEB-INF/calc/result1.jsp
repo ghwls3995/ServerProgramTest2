@@ -2,7 +2,7 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <title>JSP - result1.jsp</title>
+        <title>JSP2 - result1.jsp</title>
     </head>
     <body>
     <%--action 속성의 값으로 서버에서 처리할 서블릿 주소를 입력 하면 됨.--%>
