@@ -1,6 +1,6 @@
 package com.busanit501.serverprogramtest2.todo.dao;
 
-import com.busanit501.serverprogramtest2.todo.domain.TodoVO;
+import com.busanit501.serverprogramtest2.todo.domain.menu2VO;
 import lombok.Cleanup;
 
 import java.sql.Connection;
@@ -10,24 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TodoDAO {
+public class menu2DAO {
     // 기능 구현만 만들고, 단위 테스트 진행중이고, 나중에 화면 붙여서 작업 할 예정.
     // 조회 select
     // 데이터베이스 직접적인 데이터 연동할 때 사용하는 모델 클래스 :VO
-    public List<TodoVO> selectAll() throws Exception{
+    public List<menu2VO> selectAll() throws Exception{
         // 예외 처리 여부를 , throws 진행하기.
         // 디비 연결 하는 순서
         // 1) 연결 하는 도구 Connection 타입의 인스턴스 필요
         // 2) SQL 전달하는 도구 : PreparedStatement 타입의 인스턴스 필요
         // 3) select 할 때는, 조회 결과를 받기 위한 ResultSet 타입의 인스턴스 필요
         // 작업 후, 반납. -> @Cleanup 사용할 예정.
-        String sql = "select * from tbl_todo";
+        String sql = "select * from lunchmenu";
         //1)
         @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
         @Cleanup ResultSet resultSet = pstmt.executeQuery();
         // 디비에서 조회한 데이터 내용들을 담을 임시 List 가 필요함. 여기에 담을 예정.
-        List<TodoVO> samples = new ArrayList<TodoVO>();
+        List<menu2VO> samples = new ArrayList<menu2VO>();
 
         while (resultSet.next()){
 //      // 기존에는 , set 를 이용해서 담는 방법
@@ -43,14 +43,13 @@ public class TodoDAO {
 //      samples.add(todoVO);
             // builder 패턴으로 담는 방법.
             // 방법2
-            TodoVO todoVOBuilder = TodoVO.builder()
-                    .tno(resultSet.getLong("tno"))
-                    .title(resultSet.getString("title"))
-                    .dueDate(resultSet.getDate("dueDate").toLocalDate())
-                    .finished(resultSet.getBoolean("finished"))
+            menu2VO menu2VOBuilder = menu2VO.builder()
+                    .menuNo(resultSet.getLong("menuNo"))
+                    .MenuTitle(resultSet.getString("MenuTitle"))
+                    .MenuRegDate(resultSet.getDate("MenuRegDate").toLocalDate())
                     .build();
             // 리스트에 담기.
-            samples.add(todoVOBuilder);
+            samples.add(menu2VOBuilder);
         }
 
         //임시 반환값.
@@ -101,6 +100,7 @@ public class TodoDAO {
             rs.next();
             // 1행의 결과를 가져오기. 문자열
             now = rs.getString(1);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         } //원래는 finally 구문으로 close 해야하지만,
