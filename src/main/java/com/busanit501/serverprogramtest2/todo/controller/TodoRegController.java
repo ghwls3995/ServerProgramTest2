@@ -34,6 +34,7 @@ public class TodoRegController extends HttpServlet {
             resp.sendRedirect("/todo/list");
         } catch (Exception e) {
             throw new RuntimeException(e);
+
         }
     }
 }
