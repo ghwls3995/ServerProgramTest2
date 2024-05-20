@@ -1,4 +1,4 @@
-package com.busanit501.serverprogramtest2.todo;
+package com.busanit501.serverprogramtest2.todo.controller;
 
 import com.busanit501.serverprogramtest2.todo.dto.TodoDTO;
 import com.busanit501.serverprogramtest2.todo.service.TodoService;
@@ -12,19 +12,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name="todoList" , urlPatterns = "/todo/list")
+
+@WebServlet(name = "todoList",urlPatterns = "/todo/list")
 public class TodoListController extends HttpServlet {
+
+    //주입 , 서비스 인스턴스 , 포함.
+    private TodoService todoService = TodoService.INSTANCE;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
-        // 목록 화면으로 전달,
+        // DB 에서 , 전체 목록을 가져오기.
 
-        List<TodoDTO> sampleList = TodoService.INSTANCE.getList();
-        // 서버가 - > 클라이언트 ( 웹 , 브라우저 )
-        // req 라는 수납 도구에서 , 임시 더미 리스트를 담기.
-        req.setAttribute("list", sampleList);
+        List<TodoDTO> sampleList = null;
+        try {
+            sampleList = TodoService.INSTANCE.listAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        req.setAttribute("list",sampleList);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/todo/todoList.jsp");
-        requestDispatcher.forward(req,resp);
+        requestDispatcher.forward(req, resp);
     }
 }
+

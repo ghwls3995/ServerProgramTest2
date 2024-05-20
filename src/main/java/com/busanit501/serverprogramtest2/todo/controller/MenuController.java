@@ -1,4 +1,4 @@
-package com.busanit501.serverprogramtest2.todo;
+package com.busanit501.serverprogramtest2.todo.controller;
 
 import com.busanit501.serverprogramtest2.todo.dto.MenuDTO;
 import com.busanit501.serverprogramtest2.todo.service.MenuService;

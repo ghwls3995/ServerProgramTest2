@@ -4,6 +4,7 @@ import com.busanit501.serverprogramtest2.todo.domain.menu2VO;
 import lombok.Cleanup;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -43,25 +44,83 @@ public class menu2DAO {
 //      samples.add(todoVO);
             // builder 패턴으로 담는 방법.
             // 방법2
-            menu2VO menu2VOBuilder = menu2VO.builder()
+            menu2VO menu2VO1Builder = menu2VO.builder()
                     .menuNo(resultSet.getLong("menuNo"))
                     .MenuTitle(resultSet.getString("MenuTitle"))
                     .MenuRegDate(resultSet.getDate("MenuRegDate").toLocalDate())
                     .build();
             // 리스트에 담기.
-            samples.add(menu2VOBuilder);
+            samples.add(menu2VO1Builder);
         }
 
         //임시 반환값.
         return samples;
     }
+    public menu2VO selectOne(Long menuNo) throws Exception{
+        String sql = "select * from lunchmenu where menuNo = ?";
+        //1) @Cleanup ,자원 반납 자동으로 lombok 라는 도구 이용해서.
+        @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        // 화면에서 , 특정 게시글 선택하면,
+        // get : URL: http://localhost:8080/todo/read?tno=3
+        pstmt.setLong(1,menuNo);
+        @Cleanup ResultSet resultSet = pstmt.executeQuery();
+        // 값이 하나여서, 반복문 필요없음.
+        resultSet.next();
+        // 임시 로 담을 인스턴스 . builder 패턴 이용해보기.
+        // 데이터베이스에서 조회한 1개의 행을 넣기.
+        menu2VO menu2VO1 = menu2VO.builder()
+                .menuNo(resultSet.getLong("menuNo"))
+                .MenuTitle(resultSet.getString("MenuTitle"))
+                .MenuRegDate(resultSet.getDate("MenuRegDate").toLocalDate())
+                .build();
+        // 임시 인스턴스
+        return menu2VO1;
+    }
 
     // 쓰기 insert
+    public void insert(menu2VO vo) throws Exception {
+        String sql = "insert into lunchmenu (menuNo, MenuTitle, MenuRegDate) values (?,?,?);";
+        //1) @Cleanup ,자원 반납 자동으로 lombok 라는 도구 이용해서.
+        @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        // 화면에서 , 특정 게시글 선택하면,
+        // get : URL: http://localhost:8080/todo/read?tno=3
+//        pstmt.setLong(1,vo.getMenuNo());
+        //vo.getDueDate() : LocalDate
+        // Date.valueOf 메서드의 결과 타입 Date 로 변환함.
+        pstmt.setLong(1,vo.getMenuNo());
+        pstmt.setString(2, vo.getMenuTitle());
+        pstmt.setDate(3,Date.valueOf(vo.getMenuRegDate()));
 
+        // select 조회 할 때, pstmt.executeQuery();
+        // insert, update, delete , executeUpdate();
+//    int result = pstmt.executeUpdate();
+//    return result;
+        pstmt.executeUpdate();
+    }
     // 수정 update
+    public void update(menu2VO menu2VO1) throws Exception {
+        String sql = "update lunchmenu set MenuTitle = ?, MenuRegDate = ? where MenuNo = ?";
+        @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        // 임시 모델에 담겨진 변경할 데이터의 내용을 가져와서, 디비에 전달 할 예정.
+        pstmt.setString(1,menu2VO1.getMenuTitle());
+        pstmt.setDate(2, Date.valueOf(menu2VO1.getMenuRegDate()));
+        pstmt.setLong(3,menu2VO1.getMenuNo());
+        pstmt.executeUpdate();
+    }
 
     // 삭제 delete
+    public void delete(Long MenuNo) throws Exception {
+        String sql = "delete from lunchmenu where MenuNo = ?;";
 
+        @Cleanup Connection conn = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setLong(1,MenuNo);
+        pstmt.executeUpdate();
+    }
 
 
     public String  getTime2() throws Exception{

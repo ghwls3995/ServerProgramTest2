@@ -1,4 +1,4 @@
-package com.busanit501.serverprogramtest2.todo;
+package com.busanit501.serverprogramtest2.todo.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,15 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="todoUpdate",urlPatterns = "/todo/update" )
-public class TodoUpdateController extends HttpServlet {
+@WebServlet(name="MenuInputController" , urlPatterns = "/menu/input")
+public class MenuInputController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/todo/todoUpdate.jsp");
-        requestDispatcher.forward(req,resp);
+        // 기본, 뷰 jsp 파일로 전달하기.
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/menu/menuInput.jsp");
+        requestDispatcher.forward(req, resp);
+
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/todo/list");
+        // 입력 받은 메뉴를 , 데이터 베이스에 저장.
+
+        // 단순, 메인 메뉴 로 이동.
+        resp.sendRedirect("/menu/list");
     }
 }
+
+
