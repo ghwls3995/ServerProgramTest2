@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 @Log4j2
 public enum TodoService {
     INSTANCE;
@@ -66,16 +67,8 @@ public enum TodoService {
 
     }
 
-    // 하나 조회
-
-    // 수정
-
-    // 삭제
-
-
-
-
-    public void register(TodoDTO dto) {
+    public void register(TodoDTO dto)
+    {
         System.out.println("debug register dto 확인중 : " + dto);
     }
 

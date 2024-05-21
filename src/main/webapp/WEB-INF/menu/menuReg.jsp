@@ -2,17 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP-Model2(MVC)-todoList</title>
+    <title>JSP-Model2(MVC)-menuList</title>
 </head>
 <body>
-<h1><%= "todoReg.jsp" %>
+<h1><%= "menuReg.jsp" %>
 </h1>
 <br/>
-<h1><%= "임시 todoReg 화면." %>
+<h1><%= "임시 menuReg 화면." %>
 </h1>
-<form method="post" action="/todo/register ">
+<form method="post" action="/menu/register">
     <div>
-    <input type="text" name="title" placeholder="제목을 입력해주세요">
+    <input type="text" name="title" placeholder="점심메뉴를 입력해주세요">
     </div>
     <div>
         <input type="date" name="dueDate">

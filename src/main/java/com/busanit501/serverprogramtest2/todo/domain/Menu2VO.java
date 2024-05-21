@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 //@RequiredArgsConstructor
 @AllArgsConstructor
-public class menu2VO {
+public class Menu2VO {
     private Long menuNo;
     private String MenuTitle;
     private LocalDate MenuRegDate;

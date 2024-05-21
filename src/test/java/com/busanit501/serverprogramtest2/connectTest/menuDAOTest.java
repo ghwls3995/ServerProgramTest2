@@ -1,7 +1,7 @@
 package com.busanit501.serverprogramtest2.connectTest;
 
-import com.busanit501.serverprogramtest2.todo.dao.menu2DAO;
-import com.busanit501.serverprogramtest2.todo.domain.menu2VO;
+import com.busanit501.serverprogramtest2.todo.dao.Menu2DAO;
+import com.busanit501.serverprogramtest2.todo.domain.Menu2VO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +14,13 @@ public class menuDAOTest {
     // 사용하기위해서 방법 ? 주입, 포함
     // 선언만 햇음. null ( 집주소 없음 , 0x100 (x) )
 
-    private menu2DAO menu2DAO;
+    private Menu2DAO menu2DAO;
 
     // 각 단위 테스트가 실행되기전에,, 먼저 실행되는 어노테이션,
     // todoDAO 할당함.
     @BeforeEach
     public void ready(){
-        menu2DAO = new menu2DAO();
+        menu2DAO = new Menu2DAO();
     }
     @Test
     public void getTimeTest() throws Exception{
@@ -32,7 +32,7 @@ public class menuDAOTest {
 
     @Test
     public void getSelectAll() throws Exception {
-        List<menu2VO> samples = menu2DAO.selectAll();
+        List<Menu2VO> samples = menu2DAO.selectAll();
         // 기본 출력이고, 전체 출력
         System.out.println("samples : " + samples);
         // 향상된 for, 목록에서 요소를 하나씩 뽑아서 출력함.
